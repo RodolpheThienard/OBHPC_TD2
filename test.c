@@ -27,6 +27,7 @@ int main()
 
     // DOTPROD TEST
     assert( 10.0 == dotprod_base(A, B, N));
+    assert( 10.0 == dotprod_cblas(A, B, N));
 
     // REDUC TEST
     assert( 6.0 == reduc_base(B, N));
