@@ -24,6 +24,7 @@ f64 dotprod_cblas(f64 *restrict a, f64 *restrict b, u64 n)
   return cblas_ddot(n, a, 1, b, 1);
 }
 
+// ATLAS ALGO
 f64 dotprod_unroll8(f64 *restrict a, f64 *restrict b, u64 n)
 {
   double d = 0.0;
@@ -46,4 +47,33 @@ f64 dotprod_unroll8(f64 *restrict a, f64 *restrict b, u64 n)
     d8 += a[i+7] * b[i+7];
   }
   return d + d2 + d3 + d4 + d5 + d6 + d7 + d8;
+}
+
+f64 dotprod_asm(f64 *restrict a, f64 *restrict b, u64 n)
+{
+  f64 c = 0.0;
+  __asm__ volatile(
+      
+      "xor %%rcx, %%rcx;\n"
+      "loop:;\n"
+
+      "movsd (%[_a], %%rcx), %%xmm1;\n"
+      "movsd (%[_b], %%rcx), %%xmm2;\n"
+      "mulsd %%xmm2, %%xmm1;\n"
+      "addsd %%xmm1, %[_c];\n"
+
+      "add $8, %%rcx;\n"
+      "cmp %%rcx, %[_n];\n"
+      "jg loop;\n"
+
+    : // outputs
+      [_c] "+v"(c)
+    : // inputs
+      [_a] "r"(a),
+      [_b] "r"(b),
+      [_n] "r"(n*8)
+    : // Clobbers
+      "cc", "memory", "xmm1", "xmm2", "rcx", "xmm3"
+  );
+  return c;
 }

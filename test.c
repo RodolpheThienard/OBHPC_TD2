@@ -31,9 +31,9 @@ int main()
     // DOTPROD TEST
     assert( 10.0 == dotprod_base(A, B, N));
     assert( 10.0 == dotprod_cblas(A, B, N));
+    assert( 10.0 == dotprod_asm(A, B, N));
     assert( 25.0 == dotprod_unroll8(A8, B8, 8));
-    dotprod_asm(A, B, N);
-
+    
     // REDUC TEST
     assert( 6.0 == reduc_base(B, N));
     assert( 6.0 == reduc_cblas(B, N));
