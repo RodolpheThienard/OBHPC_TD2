@@ -3,10 +3,10 @@
 #include <cblas.h>
 
 
-#include "dotprod/tools.h"
-#include "dgemm/kernels.h"
-#include "dotprod/kernels.h"
-#include "reduc/kernels.h"
+#include "../dotprod/tools.h"
+#include "../dgemm/kernels.h"
+#include "../dotprod/kernels.h"
+#include "../reduc/kernels.h"
 
 
 int main()

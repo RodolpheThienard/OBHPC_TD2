@@ -1,8 +1,8 @@
 CC=gcc
 BIN=test
-DOT=dotprod/kernels.c
-REDUC=reduc/kernels.c
-DGEMM=dgemm/kernels.c
+DOT=../dotprod/kernels.c
+REDUC=../reduc/kernels.c
+DGEMM=../dgemm/kernels.c
 
 .PHONY: test
 
