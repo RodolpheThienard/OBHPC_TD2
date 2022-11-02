@@ -37,6 +37,7 @@ int main()
     // REDUC TEST
     assert( 6.0 == reduc_base(B, N));
     assert( 6.0 == reduc_cblas(B, N));
+    assert( 6.0 == reduc_asm(B, N));
     assert( 13.0 == reduc_unroll8(B8, N));
 
     printf("TESTS OK ! \n");
