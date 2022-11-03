@@ -27,4 +27,11 @@ basic (ijk) implementation
 basic optimisez (ikj) implementation  
 basic optimisez (iex) implementation  
 unroll4 implementation  
+unroll8 implementation  
 cblas implementation
+
+## Example :
+### Different function of Dotprod w O1 flag on I7 1165G7
+![Perf DOTPROD O1 flag](/plots/dotprod_O1.png "")
+### Different function of Reduc w ICX compiler and O1 flag on I7 1165G7
+![Perf reduc O1 flag](/plots/reduc_icxO3.png "")
