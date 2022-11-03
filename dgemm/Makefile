@@ -7,29 +7,8 @@ GNU_LFLAGS=-lm -lcblas
 
 FILES=main.c tools.c kernels.c
 
+.PHONY: dgemm
 all: dgemm
-
-perf:
-	icx $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(INTEL_LFLAGS)
-	./perf 128 100 icx
-	rm perf
-	gcc $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(GNU_LFLAGS)
-	./perf 128 100 gcc
-	rm perf
-	clang $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(GNU_LFLAGS)
-	./perf 128 100 clang
-	rm perf
-
-taskset:
-	icx $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(INTEL_LFLAGS)
-	taskset -c 0 ./taskset 128 100 icx
-	rm taskset
-	gcc $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(GNU_LFLAGS)
-	taskset -c 0 ./taskset 128 100 gcc
-	rm taskset
-	clang $(CFLAGS) $(OFLAGS) $(FILES) -o $@ $(GNU_LFLAGS)
-	taskset -c 0 ./taskset 128 100 clang
-	rm taskset
 
 dgemm:
 ifeq ($(CC),icc)
