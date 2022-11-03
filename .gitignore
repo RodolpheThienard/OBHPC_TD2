@@ -4,3 +4,9 @@ data
 TD2.*
 *.txt
 test/test
+reduc/reduc
+dotprod/dotprod
+dgemm/dgemm
+report/
+.vscode/
+plots/
