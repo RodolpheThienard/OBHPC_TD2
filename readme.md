@@ -32,6 +32,6 @@ cblas implementation
 
 ## Example :
 ### Different function of Dotprod w O1 flag on I7 1165G7
-![Perf DOTPROD O1 flag](/plots/dotprod_O1.png "")
-### Different function of Reduc w ICX compiler and O1 flag on I7 1165G7
-![Perf reduc O1 flag](/plots/reduc_icxO3.png "")
+![Perf DOTPROD O1 flag](example1.png "")
+### Different function of Reduc w ICX compiler and O3 flag on I7 1165G7
+![Perf reduc O1 flag](example2.png "")
