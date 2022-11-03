@@ -8,6 +8,12 @@
 #include "../dotprod/kernels.h"
 #include "../reduc/kernels.h"
 
+void reset_c(f64 *a, u64 N)
+{
+    for (int i = 0; i < N; i++) {
+        a[i] = 0.0;
+    }
+}
 
 int main()
 {
@@ -20,13 +26,25 @@ int main()
 
     f64 A8[8] = {1.0, 2.0, 1.0, 3.0, 1.0, 2.0, 1.0, 3.0};
     f64 B8[8] = {1.0, 2.0, 2.0, 1.0, 1.0, 2.0, 1.0, 3.0};
+    f64 C8[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     
     // DGEMM TEST
     dgemm_ijk(A, B, C, n);
-    assert(5.0 == C[0]);
-    assert(4.0 == C[1]);
-    assert(7.0 == C[2]);
-    assert(5.0 == C[3]);
+    assert(5.0 == C[0] && 4.0 == C[1] && 7.0 == C[2] && 5.0 == C[3]);
+    reset_c(C, N);
+
+    dgemm_ikj(A, B, C, n);
+    assert(5.0 == C[0] && 4.0 == C[1] && 7.0 == C[2] && 5.0 == C[3]);
+    reset_c(C, N);
+
+    dgemm_iex(A, B, C, n);
+    assert(5.0 == C[0] && 4.0 == C[1] && 7.0 == C[2] && 5.0 == C[3]);
+    reset_c(C, N);
+
+    dgemm_cblas(A, B, C, n);
+    assert(5.0 == C[0] && 4.0 == C[1] && 7.0 == C[2] && 5.0 == C[3]);
+    reset_c(C, N);
+
 
     // DOTPROD TEST
     assert( 10.0 == dotprod_base(A, B, N));
@@ -38,6 +56,7 @@ int main()
     assert( 6.0 == reduc_base(B, N));
     assert( 6.0 == reduc_cblas(B, N));
     assert( 6.0 == reduc_asm(B, N));
+    // assert( 6.0 == reduc_avx(B, N));
     assert( 13.0 == reduc_unroll8(B8, N));
 
     printf("TESTS OK ! \n");
