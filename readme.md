@@ -4,6 +4,7 @@
 - ICX compiler [intel compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html)
 - CBLAS 
 - Gnuplot
+- cpupower
 
 To download all dependancies, first look on repositories
 
@@ -13,7 +14,12 @@ Unit tests have been implemented to easily check the functions.
 To try them, run `make test` in the root repertory of the project
 
 ## Run project
-
+Before running this project,chect that the cpu frequency is stable by using cpupower  
+`sudo cpupower frequency-info`  
+if you have the option userspace in gouvernor, run  
+`sudo cpupower frequency-set -f FREQ` where FREQ is the higher frequency avaible.  
+else run  
+`sudo cpupower frequency-set -g performance` 
 To run the project, first verify that you own the dependancies !   
 After you only have to run the script `./script.sh`  
 when this will be done, run the gnuplot script with your CPU name.   
