@@ -142,6 +142,3 @@ taskset -c 0 ./dgemm/dgemm 32 100 >> data/dgemm_clang_O1.dat
 taskset -c 0 ./dgemm/dgemm 64 100 >> data/dgemm_clang_O1.dat
 taskset -c 0 ./dgemm/dgemm 128 100 >> data/dgemm_clang_O1.dat
 
-
-
-mv *.png plots
