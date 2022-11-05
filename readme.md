@@ -1,59 +1,91 @@
-# TD2 OBHPC
+# **OBHPC TD2** : Performance measurement for dgemm, dotprod and reduc
 
-## Dependancies
+## **Introduction**
+___
+The objective of this TP is to discover what performance measurement is. To do this, we must to use 3 basic functions and use their implementations. From the most basic to optimized versions, we have to implement and measure dgemm, reduc and dotprod.  
+
+For this TP, we must show our results, written in C or assembler, with gnuplot.
+  
+## **Dependencies**
+___
 - ICX compiler [intel compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html)
 - CBLAS 
 - Gnuplot
 - cpupower
 
-To download all dependancies, first look on repositories
+To download all dependencies, first look on repositories
+
+## **CPU**
+___
+To compare all data collected, we have to know what the CPU is. According to it's features, datas can evolved. It's why, as we want all the time the same data, i prepared a script to collect the right information about the CPU. 
+To run this script, `./cpu_info.sh CPU_NAME` and give it the name of the CPU  
+ex : `./cpu_info.sh i7_6700k` and datas will save in **i7_6700k.txt**
 
 
-## Tests
+## **Test**
+___
 Unit tests have been implemented to easily check the functions.  
 To try them, run `make test` in the root repertory of the project
 
-## Run project
+## **Run project**
+___
 Before running this project,chect that the cpu frequency is stable by using cpupower  
 `sudo cpupower frequency-info`  
 if you have the option userspace in gouvernor, run  
 `sudo cpupower frequency-set -f FREQ` where FREQ is the higher frequency avaible.  
 else run  
 `sudo cpupower frequency-set -g performance` 
-To run the project, first verify that you own the dependancies !   
+To run the project, first verify that you own the dependencies !   
 After you only have to run the script `./script.sh`  
 when this will be done, run the gnuplot script with your CPU name.   
 Example :`./gnuplot_one.sh i7-1165G7` 
 
-## CPU
-To compare all data collected, we have to know what the CPU is. According to it's features, datas can evolved. It's why, as we want all the time the same data, i prepared a script to collect the right information about the CPU. 
-To run this script, `./cpu_info.sh CPU_NAME` and give it the name of the CPU  
-ex : `./cpu_info.sh i7_6700k` and datas will save in **i7_6700k.txt**
-
-
-## All implementations :
-### Dotprod
+## **Dotprod**
+___
 basic implementation  
-unroll8 implementation  
-assembler implementation  
-cblas implementation
+```c
+double dotprod_base(double *restrict a, double *restrict b, long long n)
+{
+  double d = 0.0;
+  
+  for (long long i = 0; i < n; i++)
+    d += a[i] * b[i];
 
-### Reduc
+  return d;
+}
+```
+
+## **Reduc**
+___
 basic implementation  
-unroll8 implementation  
-assembler implementation  
-cblas implementation
+```c
+double reduc_base(double *restrict a, long long n)
+{
+  double d = 0.0;
+  
+  for (long long i = 0; i < n; i++)
+    d += a[i];
 
-### Dgemm
-basic (ijk) implementation  
-basic optimisez (ikj) implementation  
-basic optimisez (iex) implementation  
-unroll4 implementation  
-unroll8 implementation  
-cblas implementation
+  return d;
+}
+```
+
+## **Dgemm**
+___
+basic implementation  
+```c
+void dgemm_ijk(double *restrict a, double *restrict b, double *restrict c, long long n)
+{
+  for (long long i = 0; i < n; i++)
+    for (long long j = 0; j < n; j++)
+      for (long long k = 0; k < n; k++)
+	c[i * n + j] += a[i * n + k] * b[k * n + j];
+}
+```
 
 ## Example :
 ### Different function of Dotprod w O1 flag on I7 1165G7
-![Perf DOTPROD O1 flag](example1.png "")
-### Different function of Reduc w ICX compiler and O3 flag on I7 1165G7
-![Perf reduc O1 flag](example2.png "")
+<img src="example1.png" width="600">
+
+### Different function of dgemm w ICX compiler and O3 flag on I7 1165G7 and I5 3570
+<img src="example2.png" width="600">
