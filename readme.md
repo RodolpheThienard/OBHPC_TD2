@@ -1,13 +1,13 @@
 # **OBHPC TD2** : Performance measurement for dgemm, dotprod and reduc
 
 ## **Introduction**
-___
+
 The objective of this TP is to discover what performance measurement is. To do this, we must to use 3 basic functions and use their implementations. From the most basic to optimized versions, we have to implement and measure dgemm, reduc and dotprod.  
 
 For this TP, we must show our results, written in C or assembler, with gnuplot.
   
 ## **Dependencies**
-___
+
 - ICX compiler [intel compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html)
 - CBLAS 
 - Gnuplot
@@ -16,19 +16,19 @@ ___
 To download all dependencies, first look on repositories
 
 ## **CPU**
-___
+
 To compare all data collected, we have to know what the CPU is. According to it's features, datas can evolved. It's why, as we want all the time the same data, i prepared a script to collect the right information about the CPU. 
 To run this script, `./cpu_info.sh CPU_NAME` and give it the name of the CPU  
 ex : `./cpu_info.sh i7_6700k` and datas will save in **i7_6700k.txt**
 
 
 ## **Test**
-___
+
 Unit tests have been implemented to easily check the functions.  
 To try them, run `make test` in the root repertory of the project
 
 ## **Run project**
-___
+
 Before running this project,chect that the cpu frequency is stable by using cpupower  
 `sudo cpupower frequency-info`  
 if you have the option userspace in gouvernor, run  
@@ -41,7 +41,7 @@ when this will be done, run the gnuplot script with your CPU name.
 Example :`./gnuplot_one.sh i7-1165G7` 
 
 ## **Dotprod**
-___
+
 basic implementation  
 ```c
 double dotprod_base(double *restrict a, double *restrict b, long long n)
@@ -56,7 +56,7 @@ double dotprod_base(double *restrict a, double *restrict b, long long n)
 ```
 
 ## **Reduc**
-___
+
 basic implementation  
 ```c
 double reduc_base(double *restrict a, long long n)
@@ -71,7 +71,7 @@ double reduc_base(double *restrict a, long long n)
 ```
 
 ## **Dgemm**
-___
+
 basic implementation  
 ```c
 void dgemm_ijk(double *restrict a, double *restrict b, double *restrict c, long long n)
