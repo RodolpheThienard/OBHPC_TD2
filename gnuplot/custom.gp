@@ -6,7 +6,7 @@ set datafile separator ';'
 set yrange [0:*]
 set ylabel "Bandwidth (MiB/s)"
 set xlabel "N"
-set key font ",8"
+# set key font ""
 set boxwidth 0.9
 
 set xtics norotate center 
